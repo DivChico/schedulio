@@ -1,10 +1,22 @@
 "use client";
 import { UserButton } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 import React from "react";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
+import axios from "axios";
 
 export default function SchedulePage() {
-  const { isLoaded, userId, sessionId, getToken, firstName } = useAuth();
+  const { isLoaded, userId: clerkId } = useAuth();
+  // const { isSignedIn, user } = useUser();
+
+  const handleCreateSchedule = async () => {
+    try {
+      const response = await axios.get("/api/schedule");
+      console.log(response);
+    } catch (error) {
+      console.log("chico");
+    }
+  };
   const apiResponse = `
   7:00 AM - 7:30 AM: Morning routine (wake up, breakfast)
   7:30 AM - 8:30 AM: Exercise
@@ -18,14 +30,40 @@ export default function SchedulePage() {
   8:00 PM - 10:00 PM: Relaxation (reading, hobbies, etc.)
   10:00 PM - 11:00 PM: Prepare for bed and unwind
 `;
-const handleGenrateClick =()=>{}
+  // const tasks = parseSchedule(apiResponse);
+  // console.log(tasks);
+
+  // useEffect(() => {
+  //   if (isLoaded && clerkId) {
+  //     const checkOrCreateUser = async () => {
+  //       try {
+  //         const response = await fetch("/api/handleUser");
+  //         const data = await response.json();
+
+  //         if (response.ok) {
+  //           console.log(data);
+
+  //           setUserId(data.userId);
+  //         } else {
+  //           setError(data.error);
+  //         }
+  //       } catch (err) {
+  //         setError("Failed to fetch");
+  //       }
+  //     };
+
+  //     checkOrCreateUser();
+  //   }
+  // }, [isLoaded, clerkId]);
   return (
     <div>
       <div className=" flex items-center justify-between">
         <p>schedule (protected)</p>
-        <p>{userId}</p>
-        <UserButton />
-        <button onClick={}>generate scedule</button>
+        {/* <p>{clerkId}</p> */}
+        {/* <p>{user.firstName}</p> */}
+        {/* <p>{data.id}</p> */}
+
+        <button onClick={handleCreateSchedule}>generate scedule</button>
       </div>
     </div>
   );
