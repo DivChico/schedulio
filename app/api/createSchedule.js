@@ -6,7 +6,6 @@ export default async function GET(req, res) {
   // Check if the method is POST
   console.log("chico server");
 
-  return new NextResponse("worked", { status: 401 });
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
